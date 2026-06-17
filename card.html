@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Card</title>
+        <style>
+           body {
+            min-height: 100vh;
+            display:grid;
+            place-items: center;
+            background: #111;
+            margin: 0;
+           }
+
+           .card {
+            width: 220px;
+            height: 140px;
+            border-radius: 16px;
+            background: #1a4793;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+           }
+
+           .eye{
+            width: 28px;
+            height: 28px;
+            background: #d9e9ff;
+            border-radius: 60%;
+
+            animation: blink 2s infinite;
+            transform-origin: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+           }
+
+           @keyframes blink {
+            0%, 90%, 100% {
+                transform: scaleY(1);
+            }
+
+            95%{
+                transform: scaleY(0.1);
+            }
+              }
+
+            .pupil {
+                width: 10px;
+                height: 10px;
+                background: #0c1d73;
+                border-radius: 50%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+        </div>
+
+        <script>
+            
+            const pupils =document.querySelectorAll('.pupil');
+
+            window.addEventListener('mousemove', (e) => {
+
+                pupils.forEach((pupil) => {
+
+                    const rect= pupil.getBoundingClientRect();
+                    const eyeX = rect.left + rect.width / 2;
+                    const eyeY = rect.top + rect.height / 2;
+
+                    const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+
+                    const distance = 4;
+
+                    const moveX = Math.cos(angle) * distance; 
+                    const moveY = Math.sin(angle) * distance;
+
+                    pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } );
+            } );
+        </script>
+    </body>
+</html>
